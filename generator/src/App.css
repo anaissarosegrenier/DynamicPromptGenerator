@@ -1,0 +1,85 @@
+.container {
+    background: #EDE7E3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap:50px;
+}
+
+
+.generate-btn {
+    background: #82C0CC;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: 15px 25px;
+    transition: 0.2s;
+}
+
+.generate-btn:hover {
+
+    background: #489FB5;
+}
+
+.word-btn {
+    background: #FFA62B;
+    padding: 25px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    animation: popIn 0.8s ease-out backwards;
+
+}
+
+.word-btn:hover {
+    background: #FFBB5E;
+}
+
+.word-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.kept-btn {
+    background: #16697A;
+    border: none;
+    padding: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    animation: popIn 0.6s ease-out backwards;
+    border-radius: 10px;
+    gap: 15px;
+
+}
+
+.kept-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 25px;
+    border: 2px dotted #FFA62B;
+    border-radius: 10px;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.3)
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+body {
+    margin: 0;
+}

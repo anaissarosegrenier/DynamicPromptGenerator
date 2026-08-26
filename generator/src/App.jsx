@@ -9,12 +9,20 @@ export default function App() {
   // Use state for creating sentence //
   const [sentence, setSentence] = useState([]);
 
+  // Use state for prompt box //
+  const [prompt, setPrompt] = useState("");
+
+  // Use state for saving prompt //
+  const [pastPrompt, setPastPrompt] = useState("");
+
   // List of hard code words to change to LLM call //
   const fakeWords = ['Hello', 'Goodbye', 'Jack', "Jill", "Hill"];
 
   // Handle the click for adding words to kept bucket //
   const handleClick = () => {
+    setPastPrompt(prompt);
     setWords(fakeWords);
+    setPrompt("");
   }
   const handleKeep = (word) => {
       !kept.includes(word) &&  setKept([...kept, word])
@@ -40,7 +48,8 @@ export default function App() {
           </div>
 
           {sentence.join(" ")}
-
+          {pastPrompt}
+        <input value={prompt} onChange={(e) => setPrompt(e.target.value)} />
         <button className="generate-btn" onClick={handleClick} >
           Generate
         </button>

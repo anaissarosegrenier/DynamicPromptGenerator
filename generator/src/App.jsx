@@ -2,6 +2,8 @@ import { useState } from "react";
 import './App.css';
 
 export default function App() {
+
+    const API_URL = import.meta.env.VITE_API_URL;
     // Use State Constants //
     const [words, setWords] = useState([]);         // generated words shown in the cloud
     const [kept, setKept] = useState([]);           // words the user kept
@@ -18,7 +20,7 @@ export default function App() {
     const handleClick = async () => {
         setPastPrompt(prompt);
         try {
-            const response = await fetch("http://localhost:3001/generate", {
+            const response = await fetch(`${API_URL}/generate`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({idea: prompt}),

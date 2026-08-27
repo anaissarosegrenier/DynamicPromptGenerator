@@ -10,15 +10,28 @@ export default function App() {
     const [pastPrompt, setPastPrompt] = useState(""); // last submitted prompt
 
     // Placeholder words //
-    const fakeWords = ['Hello', 'Goodbye', 'Jack', 'Jill', 'Hill'];
+    const commonWords = ['He', 'She', 'They', 'His', "Hers", "Theirs", "Ours", "There", "Here", "Go", "Went", "Am", "Was", "Be", "To", "Over"];
+
 
 
     // Handler, save the prompt, show words, clear the input
-    const handleClick = () => {
+    const handleClick = async () => {
         setPastPrompt(prompt);
-        setWords(fakeWords);
+        try {
+            const response = await fetch("http://localhost:3001/generate", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({idea: prompt}),
+            });
+            const parseData = await response.json();
+            setWords(parseData.words);
+        } catch (error) {
+            console.error("Generation failed.", error);
+        }
         setPrompt("");
     };
+
+
 
     // Keep a generated word with no duplicates
     const handleKeep = (word) => {
@@ -34,12 +47,11 @@ export default function App() {
     return (
         <div className="container">
 
-            {/* Generated words — the cloud */}
             <div className="word-cloud">
                 {words.map((word, index) => (
                     <button
                         className="word-btn"
-                        style={{ animationDelay: `${index * 0.3}s` }}
+                        style={{animationDelay: `${index * 0.3}s`}}
                         key={index}
                         onClick={() => handleKeep(word)}
                     >
@@ -48,41 +60,53 @@ export default function App() {
                 ))}
             </div>
 
-            {/* Past prompt — the bubble */}
             {pastPrompt && <div className="prompt-box">
                 {pastPrompt}
             </div>}
 
-            {/* Input + Generate, side by side */}
+
             <div className="input-row">
                 <input className="input-box"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="Type your idea..."
+                       value={prompt}
+                       onChange={(e) => setPrompt(e.target.value)}
+                       placeholder="Type your idea..."
                 />
                 <button className="generate-btn" onClick={handleClick}>
                     Generate
                 </button>
             </div>
 
-            {/* Compose area — kept words + sentence */}
-            <div className="compose-header" >
-                Compose
-                <div className="compose-area">
-                {kept.length > 0 && <div className="kept-words">
-                    {kept.map((theWord, index) => (
+
+            <div >
+                <div className="compose-header" >
+                    Compose
+                </div>
+                <div className="common-words" >
+                    {commonWords.map((word, index) => (
                         <button
                             className="kept-btn"
                             key={index}
-                            onClick={() => handleSentence(theWord)}
-                        >
-                            {theWord}
+                            onClick={() => handleSentence(word)}
+                            >
+                            {word}
                         </button>
-                    ))}
-                </div>}
-                <div className="sentence">
-                    {sentence.join(" ")}
+                        ))}
                 </div>
+                <div className="compose-area">
+                    {kept.length > 0 && <div className="kept-words">
+                        {kept.map((theWord, index) => (
+                            <button
+                                className="kept-btn"
+                                key={index}
+                                onClick={() => handleSentence(theWord)}
+                            >
+                                {theWord}
+                            </button>
+                        ))}
+                    </div>}
+                    <div className="sentence">
+                        {sentence.join(" ")}
+                    </div>
                 </div>
             </div>
 

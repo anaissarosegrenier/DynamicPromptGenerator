@@ -21,7 +21,7 @@ app.post('/generate', async (req, res) => {
     try {
         const response = await ai.models.generateContent( {
             model: 'gemini-3.6-flash',
-            contents: `Give me 5 single words or short phrases inspired by this story idea: "${idea}". Respond with ONLY the words separated by commas, nothing else.`,
+            contents: `Give me 5 single words inspired by this story idea: "${idea}". Include a mix of verbs, nouns, and adjectives. Respond with ONLY the words separated by commas, nothing else.`,
         });
         const text = response.text;
         const words = text.split(",").map((w) => w.trim());

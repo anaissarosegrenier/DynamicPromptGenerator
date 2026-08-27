@@ -3,7 +3,11 @@ import express from 'express';
 import { GoogleGenAI } from '@google/genai'
 
 const app = express();
+const PORT = process.env.PORT || 3001;
+const cors = require('cors');
+app.use(cors());
 
+app.listen(PORT, () => console.log(`running on ${PORT}`));
 app.use(express.json());
 
 app.use((req, res, next) => {
